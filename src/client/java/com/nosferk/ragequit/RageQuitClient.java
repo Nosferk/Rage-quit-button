@@ -16,18 +16,15 @@ public class RageQuitClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		// Registrar o keybinding para a tecla Aspas (')
 		rageQuitKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-			"key.rage-quit.quit", // nome da tradução
+			"key.rage-quit.quit",
 			InputUtil.Type.KEYSYM,
-			GLFW.GLFW_KEY_APOSTROPHE, // tecla aspas (')
-			"category.rage-quit.general" // categoria
+			GLFW.GLFW_KEY_APOSTROPHE,
+			"category.rage-quit.general"
 		));
 
-		// Registrar o evento de tick para verificar se a tecla foi pressionada
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			while (rageQuitKey.wasPressed()) {
-				// Executar rage quit diretamente quando a tecla for pressionada
 				performRageQuit();
 			}
 		});
@@ -36,29 +33,21 @@ public class RageQuitClient implements ClientModInitializer {
 	private void performRageQuit() {
 		MinecraftClient client = MinecraftClient.getInstance();
 		
-		// Se estiver em um mundo/servidor
 		if (client.world != null) {
-			// Primeiro, tentar desconectar usando o método oficial
 			TitleScreen titleScreen = new TitleScreen();
 			
 			try {
-				// Forçar desconexão real do servidor/mundo
 				if (client.getNetworkHandler() != null) {
-					// Se estiver conectado a um servidor, desconectar da rede
 					client.getNetworkHandler().getConnection().disconnect(Text.literal("Rage Quit"));
 				}
 				
-				// Usar o método de desconexão oficial do Minecraft
 				if (client.isInSingleplayer()) {
-					// Se for singleplayer, desconecta e volta para o menu principal
 					client.disconnect(titleScreen, false);
 				} else {
-					// Se for multiplayer, desconecta e volta para a lista de servidores
 					client.disconnect(new MultiplayerScreen(titleScreen), false);
 				}
 				
 			} catch (Exception e) {
-				// Se houver erro na desconexão, forçar a mudança de tela
 				RageQuit.LOGGER.error("Error during rage quit, forcing screen change: " + e.getMessage());
 				
 				if (client.isInSingleplayer()) {
@@ -68,7 +57,6 @@ public class RageQuitClient implements ClientModInitializer {
 				}
 			}
 			
-			// Log da ação
 			RageQuit.LOGGER.info("Rage quit activated! Disconnected from server/world using apostrophe key.");
 		}
 	}
