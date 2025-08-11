@@ -3,13 +3,13 @@
 	"id": "rage-quit",
 	"version": "${version}",
 	"name": "Rage Quit",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "This mod adds a key to quit the server.",
 	"authors": [
 		"Nosferk"
 	],
 	"contact": {
 		"homepage": "https://nosferk.com/projects/Rage-quit",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/Nosferk/Rage-quit-button"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/rage-quit/icon.png",
@@ -31,7 +31,7 @@
 	],
 	"depends": {
 		"fabricloader": ">=0.17.2",
-		"minecraft": "~1.21.8",
+		"minecraft": "<=1.21.8=<",
 		"java": ">=21",
 		"fabric-api": "*"
 	},
